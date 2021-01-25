@@ -12,7 +12,6 @@ var velocity: Vector2 = Vector2.ZERO
 
 ### Interaction
 export(float) var interactRange = 32
-var currentHoveredObject = null
 
 
 ### Inventory
@@ -89,12 +88,3 @@ func _on_ItemCollision_body_entered(body) -> void:
 	return
 
 
-
-
-func _on_MouseCursor_area_entered(area) -> void:
-	currentHoveredObject = area.get_parent()
-	return
-
-func _on_MouseCursor_area_exited(area) -> void:
-	currentHoveredObject = null
-	return
