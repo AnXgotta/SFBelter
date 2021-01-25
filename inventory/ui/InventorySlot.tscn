@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://inventory/ui/InventorySlot_Selected.png" type="Texture" id=1]
+[ext_resource path="res://inventory/InventorySlot.gd" type="Script" id=2]
+[ext_resource path="res://inventory/ui/InventorySlot_NotSelected.png" type="Texture" id=3]
+[ext_resource path="res://inventory/ui/InventorySlot_Locked.png" type="Texture" id=4]
+
+[node name="InventorySlot" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 64, 64 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+backgroundNotSelected = ExtResource( 3 )
+backgroundSelected = ExtResource( 1 )
+backgroundLocked = ExtResource( 4 )
+
+[node name="Background" type="TextureRect" parent="."]
+margin_left = 608.0
+margin_top = 328.0
+margin_right = 672.0
+margin_bottom = 392.0
+rect_min_size = Vector2( 64, 64 )
+texture = ExtResource( 3 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Item" type="TextureRect" parent="Background"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 16.0
+margin_bottom = 16.0
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Background/Item"]
+margin_left = 14.0
+margin_top = 29.0
+margin_right = 44.0
+margin_bottom = 43.0
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}

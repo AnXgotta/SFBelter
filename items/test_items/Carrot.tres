@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://items/ConsumableItem.gd" type="Script" id=1]
+[ext_resource path="res://items/test_items/Item_Carrot.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Carrot"
+description = "Super Phallic"
+toolTip = "MMMMM delicious"
+icon = ExtResource( 2 )
+maxStack = 5
+health = 10
+energy = 15
+air = 0
