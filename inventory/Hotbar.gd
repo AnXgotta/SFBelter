@@ -10,6 +10,8 @@ func _ready() -> void:
 	EventManager.connect("inventory_slots_changed", self, "_on_slots_changed")	
 	EventManager.connect("hotbar_slot_left_clicked", self, "_on_slot_left_clicked")
 	EventManager.connect("hotbar_slot_right_clicked", self, "_on_slot_right_clicked")
+	EventManager.connect("hotbar_previous_item_selected", self, "_on_previous_item_selected")
+	EventManager.connect("hotbar_next_item_selected", self, "_on_next_item_selected")
 	return
 	
 func _on_slot_left_clicked(slotIndex: int) -> void:
@@ -19,6 +21,10 @@ func _on_slot_left_clicked(slotIndex: int) -> void:
 	
 func _on_slot_right_clicked(slotIndex: int) -> void:	
 	print("HB RC: ", slotIndex)
+	return
+	
+func _on_previous_item_selected() -> void:
+	
 	return
 	
 func _update_inventory_display() -> void:

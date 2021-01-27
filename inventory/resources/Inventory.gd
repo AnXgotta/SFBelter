@@ -2,7 +2,9 @@ extends Resource
 
 class_name Inventory
 
+enum InventoryType { INVENTORY, CONTAINER }
 
+export(InventoryType) var type = InventoryType.INVENTORY
 export(int) var inventorySize = 24
 export(int) var lockedSlots = 16
 var slots : Array = [] # InventorySlot
@@ -36,7 +38,15 @@ func initialize_empty() -> void:
 		slots.push_back(newSlot)
 	return
 
+func get_next_item_index_from_index(index: int) -> int:
+	
+	
+	return -1
 
+func get_previous_item_index_from_index(index: int) -> int:
+	
+	
+	return -1
 
 func add_item(item: Item, slotIndex: int = -1) -> int:
 	if !(item is Item):
@@ -92,18 +102,28 @@ func add_item_to_stack(amount: int, toSlotIndex: int) -> int:
 	else:
 		slots[toSlotIndex].item.amount = newAmount
 	
-	EventManager.emit_signal("inventory_slots_changed", [toSlotIndex])
+	_emit_slots_changed([toSlotIndex])
 	return remainder
 
 func set_slot_item(slotIndex, item) -> Item:
 	var previousItem = slots[slotIndex].item
 	slots[slotIndex].item = item
-	EventManager.emit_signal("inventory_slots_changed", [slotIndex])
+	_emit_slots_changed([slotIndex])
 	return previousItem
 
 func remove_slot_item(slotIndex) -> Item:
 	var previousItem = slots[slotIndex].item
 	slots[slotIndex].item = null
-	EventManager.emit_signal("inventory_slots_changed", [slotIndex])
+	_emit_slots_changed([slotIndex])
 	return previousItem
 
+func _emit_slots_changed(indeces) -> void:
+	var iType = "inventory"
+	match(type):
+		InventoryType.INVENTORY:
+			iType = 'inventory'
+		InventoryType.CONTAINER:
+			iType = 'container'	
+	
+	EventManager.emit_signal(iType + "_slots_changed", indeces)	
+	return

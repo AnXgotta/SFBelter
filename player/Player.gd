@@ -16,7 +16,6 @@ export(float) var interactRange = 32
 
 ### Inventory
 var itemInHand: Item = null
-var inventoryOpen: bool = false
 var inventory = preload("res://inventory/resources/Inventory.tres")
 
 
@@ -35,20 +34,21 @@ func _process(delta) -> void:
 	handle_move()
 	return
 	
-	
+
 func _input(event) -> void:
 	_handle_toggle_inventory_action(event)
+	_handle_mouse_wheel_action(event)
 	return
 
-func get_interaction_range() -> int:
-	return interactRange
+func _is_in_range(otherLocation: Vector2) -> bool:
+	return (get_global_position() - otherLocation).length() <= interactRange
 
 func _on_hotbar_item_selected(item: Item) -> void:
 	itemInHand = item
 	return
 
 func block_movement_input() -> bool:
-	return inventoryOpen
+	return false
 
 func handle_move() -> void:
 	
@@ -74,8 +74,14 @@ func handle_move() -> void:
 
 func _handle_toggle_inventory_action(event) -> void:
 	if event.is_action_released("toggle_inventory"):
-		inventoryOpen = !inventoryOpen
 		EventManager.emit_signal("inventory_toggled")
+	return
+	
+func _handle_mouse_wheel_action(event) -> void:
+	if event.is_action_released("mouse_wheel_up"):
+		EventManager.emit_signal("hotbar_previous_item_selected")
+	if event.is_action_released("mouse_wheel_down"):
+		EventManager.emit_signal("hotbar_next_item_selected")
 	return
 
 func pickup_item(item) -> void:
@@ -87,4 +93,16 @@ func _on_ItemCollision_body_entered(body) -> void:
 	pickup_item(body)
 	return
 
+func left_clicked_object(otherObject: Interactable) -> void:
+	if _is_in_range(otherObject.get_global_position()):
+		print("LC In range: ", otherObject.name)
+	else:
+		print("LC Not in range: ", otherObject.name)
+	return
 
+func right_clicked_object(otherObject: Interactable) -> void:
+	if _is_in_range(otherObject.get_global_position()):
+		otherObject.on_interact(itemInHand)
+	else:
+		print("RC Not in range: ", otherObject.name)
+	return

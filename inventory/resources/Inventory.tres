@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource( 1 )
+type = 0
 inventorySize = 24
 lockedSlots = 16

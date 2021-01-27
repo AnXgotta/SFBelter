@@ -198,8 +198,3 @@ parameters/playback = SubResource( 21 )
 parameters/Idle/blend_position = Vector2( 0, 0.1 )
 parameters/Run/blend_position = Vector2( 0.0513644, -0.0206186 )
 [connection signal="body_entered" from="ItemCollision" to="." method="_on_ItemCollision_body_entered"]
-[connection signal="area_entered" from="MouseCursor/Area2D" to="." method="_on_MouseCursor_area_entered"]
-[connection signal="area_exited" from="MouseCursor/Area2D" to="." method="_on_MouseCursor_area_exited"]
-[connection signal="area_exited" from="MouseCursor/Area2D" to="MouseCursor" method="_on_Area2D_area_exited"]
-
-[editable path="MouseCursor"]

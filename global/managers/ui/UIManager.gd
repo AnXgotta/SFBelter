@@ -8,7 +8,7 @@ onready var containerContainer = $MenuRoot/MenuContainer/ContainerContainer
 
 
 ### State
-enum TabType { INVENTORY, PLAYER, SETTINGS}
+
 var currentTab: int = 0
 
 
@@ -20,6 +20,7 @@ func _ready() -> void:
 	containerContainer.visible = false
 	EventManager.connect("menu_toggled", self, "on_menu_toggled")
 	EventManager.connect("inventory_toggled", self, "on_inventory_toggled")
+	EventManager.connect("player_opened_container", self, "_on_player_opened_container")
 
 	return
 
@@ -28,10 +29,17 @@ func on_inventory_toggled() -> void:
 	if !menuRoot.visible:
 		menuRoot.visible = true
 		hotbarRoot.visible = false
-		_switch_tabs(TabType.INVENTORY)
+		_switch_tabs(Constants.UITabType.INVENTORY)
 	else:
+		containerContainer.visible = false
 		menuRoot.visible = false
 		hotbarRoot.visible = true
+	return
+
+func _on_player_opened_container(containerInventory) -> void:
+	menuRoot.visible = true
+	hotbarRoot.visible = false
+	containerContainer.visible = true
 	return
 
 func _switch_tabs(nextTab) -> void:

@@ -4,7 +4,7 @@
 [ext_resource path="res://environment/tilemaps/SpaceStation_Floor_Tileset.png" type="Texture" id=2]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://items/Item.tscn" type="PackedScene" id=4]
-[ext_resource path="res://stations/container/Container.tscn" type="PackedScene" id=5]
+[ext_resource path="res://interactable/container/Container.tscn" type="PackedScene" id=5]
 
 [sub_resource type="TileSet" id=1]
 0/name = "SpaceStation_Floor_Tileset.png 0"
@@ -532,16 +532,19 @@ format = 1
 tile_data = PoolIntArray( -196607, 0, 0, -196606, 0, 1, -196605, 0, 1, -196604, 0, 1, -196603, 0, 1, -196602, 0, 1, -196601, 0, 1, -196600, 0, 1, -196599, 0, 1, -196598, 0, 1, -196597, 0, 1, -196596, 0, 1, -196595, 0, 1, -196594, 0, 2, -131071, 0, 65540, -131070, 0, 131073, -131069, 0, 131073, -131068, 0, 131073, -131067, 0, 131073, -131066, 0, 131073, -131065, 0, 131073, -131064, 0, 131073, -131063, 0, 131073, -131062, 0, 131073, -131061, 0, 131073, -131060, 0, 131073, -131059, 0, 131073, -131058, 0, 65543, -65535, 0, 65539, -65522, 0, 65539, 1, 0, 65539, 14, 0, 65539, 65537, 0, 65539, 65550, 0, 65539, 131073, 0, 65539, 131086, 0, 65539, 196609, 0, 65539, 196622, 0, 65539, 262145, 0, 65539, 262158, 0, 65539, 327681, 0, 131076, 327682, 0, 1, 327683, 0, 1, 327684, 0, 1, 327685, 0, 1, 327686, 0, 1, 327687, 0, 1, 327688, 0, 1, 327689, 0, 1, 327690, 0, 1, 327691, 0, 1, 327692, 0, 1, 327693, 0, 1, 327694, 0, 131079, 393217, 0, 131072, 393218, 0, 131073, 393219, 0, 131073, 393220, 0, 131073, 393221, 0, 131073, 393222, 0, 131073, 393223, 0, 131073, 393224, 0, 131073, 393225, 0, 131073, 393226, 0, 131073, 393227, 0, 131073, 393228, 0, 131073, 393229, 0, 131073, 393230, 0, 131074 )
 
 [node name="Item" parent="." instance=ExtResource( 4 )]
-position = Vector2( 114, 145 )
+position = Vector2( 269, 131 )
 
 [node name="Item2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 116, 108 )
+position = Vector2( 271, 94 )
 
 [node name="Item3" parent="." instance=ExtResource( 4 )]
-position = Vector2( 88, 108 )
+position = Vector2( 243, 94 )
 
 [node name="Item4" parent="." instance=ExtResource( 4 )]
-position = Vector2( 86, 144 )
+position = Vector2( 241, 130 )
 
 [node name="Container" parent="." instance=ExtResource( 5 )]
-position = Vector2( 336, 94 )
+position = Vector2( 336, 15 )
+
+[node name="Container2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 337, 48 )

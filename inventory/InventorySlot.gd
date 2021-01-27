@@ -33,7 +33,7 @@ func _get_signal_string(buttonClickString: String) -> String:
 			pre = "inventory"
 		SlotType.HOTBAR:
 			pre = "hotbar"
-		SlotType.CONTIANER:
+		SlotType.CONTAINER:
 			pre = "container"
 			
 	print(pre + "_slot_" + buttonClickString)
@@ -42,7 +42,10 @@ func _get_signal_string(buttonClickString: String) -> String:
 func update_display(item: Item) -> void:
 	if item is Item:
 		itemImage.texture = item.icon
-		amountLabel.text = str(item.amount)
+		if item.amount > 1:
+			amountLabel.text = str(item.amount)
+		else:
+			amountLabel.text = ""
 	else:
 		itemImage.texture = null
 		amountLabel.text = ""

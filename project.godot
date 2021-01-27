@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://items/ConsumableItem.gd"
 }, {
+"base": "Node2D",
+"class": "Interactable",
+"language": "GDScript",
+"path": "res://interactable/Interactable.gd"
+}, {
 "base": "Resource",
 "class": "Inventory",
 "language": "GDScript",
@@ -29,11 +34,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://items/Item.gd"
 }, {
-"base": "Resource",
-"class": "Station",
-"language": "GDScript",
-"path": "res://stations/StationResource.gd"
-}, {
 "base": "Item",
 "class": "UsableItem",
 "language": "GDScript",
@@ -41,10 +41,10 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "ConsumableItem": "",
+"Interactable": "",
 "Inventory": "",
 "InventorySlot": "",
 "Item": "",
-"Station": "",
 "UsableItem": ""
 }
 
@@ -56,6 +56,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
+Constants="*res://global/Constants.gd"
 EventManager="*res://global/managers/EventManager.gd"
 GameManager="*res://global/managers/GameManager.gd"
 UIManager="*res://global/managers/ui/UIManager.tscn"
@@ -126,6 +127,16 @@ left_click={
 right_click={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+mouse_wheel_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+mouse_wheel_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 

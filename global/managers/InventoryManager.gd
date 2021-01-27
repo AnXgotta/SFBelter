@@ -10,6 +10,7 @@ func _ready() -> void:
 	EventManager.connect("player_picked_up_item", self, "_on_player_picked_up_item")
 	EventManager.connect("inventory_slot_left_clicked", self, "_on_inventory_slot_left_clicked")
 	EventManager.connect("inventory_slot_right_clicked", self, "_on_inventory_slot_right_clicked")
+	EventManager.connect("player_opened_container", self, "_on_player_opened_container")
 	EventManager.connect("container_slot_left_clicked", self, "_on_container_slot_left_clicked")
 	EventManager.connect("container_slot_right_clicked", self, "_on_container_slot_right_clicked")
 	return
@@ -26,6 +27,9 @@ func set_mouse_item(newItem: Item) -> Item:
 	EventManager.emit_signal("mouse_slot_changed", newItem)
 	return previousMouseItem
 
+func _on_player_opened_container(containerInventory) -> void:
+	currentContainerInventory = containerInventory
+	return
 	
 func _on_player_picked_up_item(item) -> void:
 	var remainder = playerInventory.add_item(item.get_item_resource())
