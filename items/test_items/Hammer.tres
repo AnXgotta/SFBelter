@@ -1,15 +1,14 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://items/ConsumableItem.gd" type="Script" id=1]
-[ext_resource path="res://items/test_items/Item_Hammer..png" type="Texture" id=2]
+[ext_resource path="res://items/ToolItem.gd" type="Script" id=1]
+[ext_resource path="res://items/test_items/Item_Hammer.png" type="Texture" id=2]
 
 [resource]
 script = ExtResource( 1 )
+type = 1
 name = "Hammer"
-description = "It's hammery"
-toolTip = "Hammer Time"
+description = "It's a hammer"
+toolTip = "Ham ham ham"
 icon = ExtResource( 2 )
 maxStack = 1
-health = 0
-energy = 0
-air = 0
+damage = 5

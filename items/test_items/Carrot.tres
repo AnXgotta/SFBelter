@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource( 1 )
+type = 3
 name = "Carrot"
 description = "Super Phallic"
 toolTip = "MMMMM delicious"

@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "UsableItem",
+"base": "Item",
 "class": "ConsumableItem",
 "language": "GDScript",
 "path": "res://items/ConsumableItem.gd"
@@ -35,9 +35,9 @@ _global_script_classes=[ {
 "path": "res://items/Item.gd"
 }, {
 "base": "Item",
-"class": "UsableItem",
+"class": "ToolItem",
 "language": "GDScript",
-"path": "res://items/UsableItem.gd"
+"path": "res://items/ToolItem.gd"
 } ]
 _global_script_class_icons={
 "ConsumableItem": "",
@@ -45,7 +45,7 @@ _global_script_class_icons={
 "Inventory": "",
 "InventorySlot": "",
 "Item": "",
-"UsableItem": ""
+"ToolItem": ""
 }
 
 [application]

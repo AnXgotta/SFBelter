@@ -16,6 +16,5 @@ func get_item_resource() -> Item:
 
 
 func was_picked_up() -> void:
-	print("Was Picked Up")
 	queue_free()
 	return

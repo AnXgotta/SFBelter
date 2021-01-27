@@ -1,6 +1,7 @@
 extends Resource
 class_name Item
 
+export(Constants.ItemType) var type = Constants.ItemType.UNK
 export(String) var name = ""
 export(String) var description = ""
 export(String) var toolTip = ""

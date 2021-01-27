@@ -1,9 +1,6 @@
 extends KinematicBody2D
 
 
-
-
-
 ### Movement
 var MAX_SPEED: float = 60
 var ACCELERATION: float = 200
@@ -27,6 +24,7 @@ onready var animState: AnimationNodeStateMachinePlayback = animTree.get("paramet
 
 func _ready() -> void:
 	EventManager.connect("hotbar_item_selected", self, "_on_hotbar_item_selected")
+	EventManager.connect("player_used_consumable_item", self, "_on_player_used_consumable_item")
 	return
 
 
@@ -40,12 +38,21 @@ func _input(event) -> void:
 	_handle_mouse_wheel_action(event)
 	return
 
-func _is_in_range(otherLocation: Vector2) -> bool:
-	return (get_global_position() - otherLocation).length() <= interactRange
+
+### Events
 
 func _on_hotbar_item_selected(item: Item) -> void:
 	itemInHand = item
 	return
+
+func _on_player_used_consumable_item(item) -> void:
+	print("Player consumable: ", item.name)
+	return
+
+
+
+func _is_in_range(otherLocation: Vector2) -> bool:
+	return (get_global_position() - otherLocation).length() <= interactRange
 
 func block_movement_input() -> bool:
 	return false
@@ -93,16 +100,22 @@ func _on_ItemCollision_body_entered(body) -> void:
 	pickup_item(body)
 	return
 
-func left_clicked_object(otherObject: Interactable) -> void:
+func left_clicked_object(otherObject) -> void:
 	if _is_in_range(otherObject.get_global_position()):
 		print("LC In range: ", otherObject.name)
+		otherObject.on_interact(itemInHand)
 	else:
 		print("LC Not in range: ", otherObject.name)
 	return
 
-func right_clicked_object(otherObject: Interactable) -> void:
+func right_clicked_object(otherObject) -> void:
 	if _is_in_range(otherObject.get_global_position()):
 		otherObject.on_interact(itemInHand)
 	else:
 		print("RC Not in range: ", otherObject.name)
+	return
+
+func on_interact(itemInHand) -> void:
+	if itemInHand is Item && itemInHand.type == Constants.ItemType.CONSUMABLE:
+		itemInHand.on_consume_item()
 	return

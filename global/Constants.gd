@@ -5,9 +5,9 @@ enum MouseCursorType { ARROW, FINGER, ITEM }
 
 
 ### UI
-enum UITabType { INVENTORY, PLAYER, SETTINGS}
+enum UITabType { INVENTORY, PLAYER, SETTINGS }
 
 
 
 ### ITEM
-enum ItemType { }
+enum ItemType { UNK, TOOL, WEAPON, CONSUMABLE }
