@@ -7,11 +7,9 @@ var currentSelectedSlot = -1
 
 func _ready() -> void:
 	inventory = InventoryManager.get_player_inventory()
-	EventManager.connect("inventory_slots_changed", self, "_on_slots_changed")	
+	EventManager.connect("inventory_slots_changed", self, "_on_slots_changed")
 	EventManager.connect("hotbar_slot_left_clicked", self, "_on_slot_left_clicked")
 	EventManager.connect("hotbar_slot_right_clicked", self, "_on_slot_right_clicked")
-	EventManager.connect("hotbar_previous_item_selected", self, "_on_previous_item_selected")
-	EventManager.connect("hotbar_next_item_selected", self, "_on_next_item_selected")
 	return
 	
 func _on_slot_left_clicked(slotIndex: int) -> void:
@@ -19,12 +17,26 @@ func _on_slot_left_clicked(slotIndex: int) -> void:
 	EventManager.emit_signal("hotbar_item_selected", slotItem)
 	return
 	
-func _on_slot_right_clicked(slotIndex: int) -> void:	
+func _on_slot_right_clicked(slotIndex: int) -> void:
 	print("HB RC: ", slotIndex)
 	return
 	
-func _on_previous_item_selected() -> void:
+func on_previous_item_selected() -> void:
+	if currentSelectedSlot < 0:
+		_set_slot_selected(true, 0)
+	elif currentSelectedSlot == 0:
+		_set_slot_selected(true, HOTBAR_SIZE - 1)
+	else:
+		_set_slot_selected(true, currentSelectedSlot - 1)
+	return
 	
+func on_next_item_selected() -> void:
+	if currentSelectedSlot < 0:
+		_set_slot_selected(true, 0)
+	elif currentSelectedSlot == HOTBAR_SIZE - 1:
+		_set_slot_selected(true, 0)
+	else:
+		_set_slot_selected(true, currentSelectedSlot + 1)
 	return
 	
 func _update_inventory_display() -> void:
@@ -47,11 +59,14 @@ func _update_slot_display(slotIndex: int) -> void:
 	return
 
 func _set_slot_selected(selected: bool, slotIndex: int) -> Item:
+	# unselect currently selected slot if needed
 	if selected && currentSelectedSlot >= 0:
 		_set_slot_selected(false, currentSelectedSlot)
 	
+	# set selected/deselected slot and update everyone of new equipped item
 	currentSelectedSlot = slotIndex
 	var slotUi = get_child(slotIndex)
 	var inventoryItem = inventory.slots[slotIndex].item
 	slotUi.set_selected(selected)
+	EventManager.emit_signal("hotbar_item_selected", inventoryItem)
 	return inventoryItem

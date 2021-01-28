@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://player/ui/PlayerInfoScreen.gd" type="Script" id=1]
+[ext_resource path="res://player/ui/ShieldBar_Progress.png" type="Texture" id=2]
+[ext_resource path="res://player/ui/HealthBar_Background.png" type="Texture" id=3]
+[ext_resource path="res://player/ui/HealthBar_Progress.png" type="Texture" id=4]
+[ext_resource path="res://player/ui/ShieldBar_Background.png" type="Texture" id=5]
+
+[node name="VBoxContainer" type="HBoxContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 45.0
+margin_bottom = 132.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" type="TextureProgress" parent="."]
+margin_right = 17.0
+margin_bottom = 125.0
+size_flags_horizontal = 3
+step = 0.1
+value = 100.0
+texture_under = ExtResource( 3 )
+texture_progress = ExtResource( 4 )
+fill_mode = 3
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+
+[node name="ShieldBar" type="TextureProgress" parent="."]
+margin_left = 21.0
+margin_right = 38.0
+margin_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 100.0
+step = 0.1
+value = 100.0
+texture_under = ExtResource( 5 )
+texture_progress = ExtResource( 2 )
+fill_mode = 3
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2

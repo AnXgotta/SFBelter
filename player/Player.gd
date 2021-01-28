@@ -1,5 +1,11 @@
 extends KinematicBody2D
 
+### State
+
+var health: float = 100
+var maxHealth: float = 100
+var shield: float = 50
+var maxShield: float = 50
 
 ### Movement
 var MAX_SPEED: float = 60
@@ -14,6 +20,7 @@ export(float) var interactRange = 32
 ### Inventory
 var itemInHand: Item = null
 var inventory = preload("res://inventory/resources/Inventory.tres")
+var inventoryOpen: bool = false
 
 
 ### Animation
@@ -24,14 +31,14 @@ onready var animState: AnimationNodeStateMachinePlayback = animTree.get("paramet
 
 func _ready() -> void:
 	EventManager.connect("hotbar_item_selected", self, "_on_hotbar_item_selected")
-	EventManager.connect("player_used_consumable_item", self, "_on_player_used_consumable_item")
+	EventManager.connect("player_opened_container", self, "_on_player_opened_container")
 	return
 
 
 func _process(delta) -> void:
 	handle_move()
 	return
-	
+
 
 func _input(event) -> void:
 	_handle_toggle_inventory_action(event)
@@ -39,34 +46,52 @@ func _input(event) -> void:
 	return
 
 
+### Accessor / Mutator
+
+func modify_health(amount: int) -> void:
+	if amount < 0:
+		health = max(0, health + amount)
+	else:
+		health = min(health + amount, maxHealth)
+	var healthPercentage = (health/maxHealth) * 100
+	EventManager.emit_signal("player_health_changed", healthPercentage)
+	return
+
+func modify_shield(amount: int) -> void:
+	if amount < 0:
+		shield = max(0, shield + amount)
+	else:
+		shield = min(shield + amount, maxShield)
+	var shieldPercentage = float(shield/maxShield) * 100
+	EventManager.emit_signal("player_shield_changed", shieldPercentage)
+	return
+
 ### Events
 
 func _on_hotbar_item_selected(item: Item) -> void:
 	itemInHand = item
 	return
 
-func _on_player_used_consumable_item(item) -> void:
-	print("Player consumable: ", item.name)
+func _on_player_opened_container(container) -> void:
+	inventoryOpen = true
 	return
-
-
 
 func _is_in_range(otherLocation: Vector2) -> bool:
 	return (get_global_position() - otherLocation).length() <= interactRange
 
-func block_movement_input() -> bool:
-	return false
+func _block_movement_input() -> bool:
+	return inventoryOpen
 
 func handle_move() -> void:
-	
+
 	var input_vector = Vector2.ZERO
-	
-	if !block_movement_input():
+
+	if !_block_movement_input():
 		input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 		input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
-		
+
 	var input_vector_n = input_vector.normalized()
-	
+
 	if input_vector_n != Vector2.ZERO:
 		animTree.set("parameters/Idle/blend_position", input_vector_n)
 		animTree.set("parameters/Run/blend_position", input_vector_n)
@@ -75,15 +100,16 @@ func handle_move() -> void:
 	else:
 		animState.travel("Idle")
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * get_physics_process_delta_time())
-	
+
 	velocity = move_and_slide(velocity)
 	return
 
 func _handle_toggle_inventory_action(event) -> void:
 	if event.is_action_released("toggle_inventory"):
-		EventManager.emit_signal("inventory_toggled")
+		inventoryOpen = !inventoryOpen
+		EventManager.emit_signal("inventory_toggled", inventoryOpen)
 	return
-	
+
 func _handle_mouse_wheel_action(event) -> void:
 	if event.is_action_released("mouse_wheel_up"):
 		EventManager.emit_signal("hotbar_previous_item_selected")
@@ -106,6 +132,8 @@ func left_clicked_object(otherObject) -> void:
 		otherObject.on_interact(itemInHand)
 	else:
 		print("LC Not in range: ", otherObject.name)
+		modify_health(-5)
+		modify_shield(-10)
 	return
 
 func right_clicked_object(otherObject) -> void:

@@ -545,12 +545,6 @@ validToolNames = [ "Hammer" ]
 producedItem = ExtResource( 7 )
 numberItemsProduced = 8
 
-[node name="Container" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 320, 112 )
-
-[node name="Container2" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 321, 145 )
-
 [node name="Item" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 239, 180 )
 itemResource = ExtResource( 8 )
@@ -558,3 +552,9 @@ itemResource = ExtResource( 8 )
 [node name="Item2" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 204, 181 )
 itemResource = ExtResource( 8 )
+
+[node name="Container" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 320, 145 )
+
+[node name="Container2" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 320, 113 )
