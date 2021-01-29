@@ -8,9 +8,10 @@ var currentContainerInventory = null
 
 func _ready() -> void:
 	EventManager.connect("player_picked_up_item", self, "_on_player_picked_up_item")
+	EventManager.connect("player_opened_container", self, "_on_player_opened_container")
+	EventManager.connect("player_consumed_item", self, "_on_player_consumed_item")
 	EventManager.connect("inventory_slot_left_clicked", self, "_on_inventory_slot_left_clicked")
 	EventManager.connect("inventory_slot_right_clicked", self, "_on_inventory_slot_right_clicked")
-	EventManager.connect("player_opened_container", self, "_on_player_opened_container")
 	EventManager.connect("container_slot_left_clicked", self, "_on_container_slot_left_clicked")
 	EventManager.connect("container_slot_right_clicked", self, "_on_container_slot_right_clicked")
 	return
@@ -37,14 +38,15 @@ func _on_player_picked_up_item(item) -> void:
 		item.was_picked_up()
 	return
 	
+func _on_player_consumed_item(item) -> void:
+	
+	return
 	
 func _on_inventory_slot_left_clicked(slotIndex: int) -> void:
-	print("I S L C")
 	_on_slot_left_clicked(playerInventory, slotIndex)
 	return
 	
 func _on_inventory_slot_right_clicked(slotIndex: int) -> void:
-	print("I S R C")
 	_on_slot_right_clicked(playerInventory, slotIndex)
 	return
 	

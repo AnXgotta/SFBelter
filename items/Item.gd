@@ -16,3 +16,15 @@ func is_same(otherName: String) -> bool:
 func is_stack_full() -> bool:
 	return amount == maxStack
 
+func get_icon() -> Texture:
+	return icon
+
+func get_amount() -> int:
+	return amount
+
+func get_name() -> String:
+	return name
+
+func consume_one() -> int:
+	amount -= 1
+	return amount

@@ -10,12 +10,6 @@ export(int) var lockedSlots = 16
 var slots : Array = [] # InventorySlot
 
 
-func SETTESTITEM():
-	if rand_range(0, 1) < 0.5:
-		add_item(load("res://items/test_items/Carrot.tres").duplicate(), 1)
-	else:		
-		add_item(load("res://items/test_items/Hammer.tres").duplicate(), 1)
-
 func get_item_in_slot(index: int) -> Item:
 	var item = null
 	if slots.size() > index:
@@ -38,15 +32,6 @@ func initialize_empty() -> void:
 		slots.push_back(newSlot)
 	return
 
-func get_next_item_index_from_index(index: int) -> int:
-	
-	
-	return -1
-
-func get_previous_item_index_from_index(index: int) -> int:
-	
-	
-	return -1
 
 func add_item(item: Item, slotIndex: int = -1) -> int:
 	if !(item is Item):

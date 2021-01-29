@@ -75,15 +75,18 @@ func set_cursor(mouseCursor) -> void:
 	return
 
 func show_item(texture: Texture, amount: int) -> void:
+	print("Show Item: ", amount)
 	itemTexture.texture = texture
 	if amount > 1:
 		itemLabel.text = str(amount)
+		itemLabel.visible = true
 	else:
 		itemLabel.text = ""
 	itemTexture.visible = true
 
 func hide_item() -> void:
 	itemTexture.visible = false
+	itemLabel.visible = false
 	return
 
 func _on_Area2D_area_entered(area):

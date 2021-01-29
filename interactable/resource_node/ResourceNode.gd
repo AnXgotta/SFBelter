@@ -8,11 +8,11 @@ export(Resource) var producedItem = null
 export(int) var numberItemsProduced = 0
 
 
-func can_interact(itemInHand) -> bool:
+func _can_interact(itemInHand) -> bool:
 	return (itemInHand is Item) && (itemInHand.type == Constants.ItemType.TOOL) && (validToolNames.has(itemInHand.name))
 
 func on_interact(toolUsed: Item) -> void:
-	if !can_interact(toolUsed):
+	if !_can_interact(toolUsed):
 		return
 		
 	healthPoints = max(0, healthPoints - toolUsed.damage)

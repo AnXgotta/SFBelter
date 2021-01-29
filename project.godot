@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "Blueprint",
+"language": "GDScript",
+"path": "res://interactable/station/blueprint/Blueprint.gd"
+}, {
 "base": "Item",
 "class": "ConsumableItem",
 "language": "GDScript",
@@ -40,6 +45,7 @@ _global_script_classes=[ {
 "path": "res://items/ToolItem.gd"
 } ]
 _global_script_class_icons={
+"Blueprint": "",
 "ConsumableItem": "",
 "Interactable": "",
 "Inventory": "",

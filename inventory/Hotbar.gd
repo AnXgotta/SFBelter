@@ -3,7 +3,7 @@ extends HBoxContainer
 var HOTBAR_SIZE: int = 8
 
 var inventory = null
-var currentSelectedSlot = -1
+var selectedSlotIndex = -1
 
 func _ready() -> void:
 	inventory = InventoryManager.get_player_inventory()
@@ -22,23 +22,24 @@ func _on_slot_right_clicked(slotIndex: int) -> void:
 	return
 	
 func on_previous_item_selected() -> void:
-	if currentSelectedSlot < 0:
+	if selectedSlotIndex < 0:
 		_set_slot_selected(true, 0)
-	elif currentSelectedSlot == 0:
+	elif selectedSlotIndex == 0:
 		_set_slot_selected(true, HOTBAR_SIZE - 1)
 	else:
-		_set_slot_selected(true, currentSelectedSlot - 1)
+		_set_slot_selected(true, selectedSlotIndex - 1)
 	return
 	
 func on_next_item_selected() -> void:
-	if currentSelectedSlot < 0:
+	if selectedSlotIndex < 0:
 		_set_slot_selected(true, 0)
-	elif currentSelectedSlot == HOTBAR_SIZE - 1:
+	elif selectedSlotIndex == HOTBAR_SIZE - 1:
 		_set_slot_selected(true, 0)
 	else:
-		_set_slot_selected(true, currentSelectedSlot + 1)
+		_set_slot_selected(true, selectedSlotIndex + 1)
 	return
-	
+
+
 func _update_inventory_display() -> void:
 	for i in range(HOTBAR_SIZE):
 		_update_slot_display(i)
@@ -54,17 +55,17 @@ func _update_slot_display(slotIndex: int) -> void:
 	var slotUi = get_child(slotIndex)
 	var inventoryItem = inventory.slots[slotIndex].item
 	slotUi.update_display(inventoryItem)
-	if slotIndex == currentSelectedSlot:
+	if slotIndex == selectedSlotIndex:
 		EventManager.emit_signal("hotbar_item_selected", inventoryItem)
 	return
 
 func _set_slot_selected(selected: bool, slotIndex: int) -> Item:
 	# unselect currently selected slot if needed
-	if selected && currentSelectedSlot >= 0:
-		_set_slot_selected(false, currentSelectedSlot)
+	if selected && selectedSlotIndex >= 0:
+		_set_slot_selected(false, selectedSlotIndex)
 	
 	# set selected/deselected slot and update everyone of new equipped item
-	currentSelectedSlot = slotIndex
+	selectedSlotIndex = slotIndex
 	var slotUi = get_child(slotIndex)
 	var inventoryItem = inventory.slots[slotIndex].item
 	slotUi.set_selected(selected)

@@ -13,7 +13,7 @@ onready var container = $ContainerRoot
 ### State
 var inventoryOpen: bool = false
 var containerOpen: bool = false
-
+var selectedItemIndex: int = -1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -79,3 +79,6 @@ func _on_player_opened_container(containerInventory) -> void:
 func _switch_tabs(nextTab) -> void:
 			
 	return
+	
+
+
