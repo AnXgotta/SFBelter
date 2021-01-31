@@ -1,11 +1,5 @@
 extends Node2D
 
-
-
-onready var player = get_parent()
-
-var blockInput: bool = false
-
 var hoveredInteractable = null
 
 export(Texture) var arrow = null
@@ -19,17 +13,6 @@ func _ready() -> void:
 	cursor.texture = arrow
 	hide_item()
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	EventManager.connect("inventory_toggled", self, "_on_inventory_toggled")
-	EventManager.connect("player_opened_container", self, "_on_player_opened_container")
-	EventManager.connect("mouse_slot_changed", self, "_on_mouse_item_changed")
-	return
-
-func _on_inventory_toggled(inventoryOpened: bool) -> void:
-	blockInput = inventoryOpened
-	return
-
-func _on_player_opened_container(container) -> void:
-	blockInput = true
 	return
 
 func _process(delta) -> void:
@@ -42,20 +25,20 @@ func _input(event) -> void:
 	return
 	
 func _handle_collider_movement() -> void:
-	if blockInput:
+	if PlayerManager.should_block_mouse_input():
 		return
 	set_global_position(get_global_mouse_position())
 	return
 	
 func _handle_mouse_click(event) -> void:
-	if blockInput:
+	if PlayerManager.should_block_mouse_input():
 		return
 	if event.is_action_released("right_click"):
 		if hoveredInteractable != null:
-			player.right_clicked_object(hoveredInteractable)
+			pass
 	if event.is_action_released("left_click"):
 		if hoveredInteractable != null:
-			player.left_clicked_object(hoveredInteractable)
+			pass
 	return
 
 func _on_mouse_item_changed(item: Item) -> void:

@@ -13,16 +13,6 @@ var ACCELERATION: float = 200
 var FRICTION: float = 200
 var velocity: Vector2 = Vector2.ZERO
 
-### Interaction
-export(float) var interactRange = 32
-
-
-### Inventory
-var itemInHand: Item = null
-var inventory = preload("res://inventory/resources/Inventory.tres")
-var inventoryOpen: bool = false
-
-
 ### Animation
 onready var animPlayer = $AnimationPlayer
 onready var animTree = $AnimationTree
@@ -30,7 +20,6 @@ onready var animState: AnimationNodeStateMachinePlayback = animTree.get("paramet
 
 
 func _ready() -> void:
-	EventManager.connect("hotbar_item_selected", self, "_on_hotbar_item_selected")
 	EventManager.connect("player_opened_container", self, "_on_player_opened_container")
 	return
 
@@ -68,19 +57,11 @@ func modify_shield(amount: int) -> void:
 
 ### Events
 
-func _on_hotbar_item_selected(item: Item) -> void:
-	itemInHand = item
-	return
 
-func _on_player_opened_container(container) -> void:
-	inventoryOpen = true
-	return
 
-func _is_in_range(otherLocation: Vector2) -> bool:
-	return (get_global_position() - otherLocation).length() <= interactRange
 
 func _block_movement_input() -> bool:
-	return inventoryOpen
+	return PlayerManager.should_block_movement()
 
 func handle_move() -> void:
 
@@ -106,8 +87,7 @@ func handle_move() -> void:
 
 func _handle_toggle_inventory_action(event) -> void:
 	if event.is_action_released("toggle_inventory"):
-		inventoryOpen = !inventoryOpen
-		EventManager.emit_signal("inventory_toggled", inventoryOpen)
+		EventManager.emit_signal("inventory_toggled")
 	return
 
 func _handle_mouse_wheel_action(event) -> void:
@@ -129,7 +109,7 @@ func _on_ItemCollision_body_entered(body) -> void:
 func left_clicked_object(otherObject) -> void:
 	if _is_in_range(otherObject.get_global_position()):
 		print("LC In range: ", otherObject.name)
-		otherObject.on_interact(itemInHand)
+		otherObject.on_interact()
 	else:
 		print("LC Not in range: ", otherObject.name)
 		modify_health(-5)
@@ -138,7 +118,7 @@ func left_clicked_object(otherObject) -> void:
 
 func right_clicked_object(otherObject) -> void:
 	if _is_in_range(otherObject.get_global_position()):
-		otherObject.on_interact(itemInHand)
+		otherObject.on_interact()
 	else:
 		print("RC Not in range: ", otherObject.name)
 	return

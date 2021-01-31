@@ -3,18 +3,11 @@ extends GridContainer
 
 var inventory = null
 
-func _ready() -> void:	
-	EventManager.connect("inventory_toggled", self, "_on_inventory_toggled")
+func _ready() -> void:
 	EventManager.connect("container_slots_changed", self, "_on_slots_changed")
-	EventManager.connect("player_opened_container", self, "_on_player_opened_container")
 	return
 
-func _on_inventory_toggled(open) -> void:
-	if !open:
-		inventory = null
-	return
-
-func _on_player_opened_container(containerInventory) -> void:
+func update_container(containerInventory) -> void:
 	inventory = containerInventory
 	_update_inventory_display()
 	return

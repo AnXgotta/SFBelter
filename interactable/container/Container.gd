@@ -9,6 +9,6 @@ func _ready() -> void:
 	return
 
 
-func on_interact(equippedItem) -> void:
+func on_interact() -> void:
 	EventManager.emit_signal("player_opened_container", inventory)
 	return

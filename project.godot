@@ -65,8 +65,7 @@ config/icon="res://icon.png"
 Constants="*res://global/Constants.gd"
 EventManager="*res://global/managers/EventManager.gd"
 GameManager="*res://global/managers/GameManager.gd"
-UIManager="*res://global/managers/ui/UIManager.tscn"
-InventoryManager="*res://global/managers/InventoryManager.gd"
+PlayerManager="*res://global/managers/PlayerManager.tscn"
 
 [display]
 

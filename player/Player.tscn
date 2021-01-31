@@ -1,9 +1,8 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/animations/Player_0_v1-Sheet.png" type="Texture" id=2]
 [ext_resource path="res://player/PlayerCamera.tscn" type="PackedScene" id=3]
-[ext_resource path="res://mouse/MouseCursor.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -158,7 +157,9 @@ graph_offset = Vector2( 15, -12 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=22]
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"player",
+]]
 position = Vector2( 0, -16 )
 collision_layer = 2
 script = ExtResource( 1 )
@@ -187,8 +188,6 @@ collision_layer = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource( 3 )
-
-[node name="MouseCursor" parent="." instance=ExtResource( 4 )]
 
 [node name="PlayerCamera" parent="." instance=ExtResource( 3 )]
 zoom = Vector2( 0.35, 0.35 )

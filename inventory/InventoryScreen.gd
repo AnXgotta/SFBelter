@@ -3,7 +3,7 @@ extends GridContainer
 var inventory = null
 
 func _ready() -> void:
-	inventory = InventoryManager.get_player_inventory()
+	inventory = PlayerManager.get_player_inventory()
 	inventory.initialize_empty()
 	EventManager.connect("inventory_slots_changed", self, "_on_slots_changed")
 	initalize_display()

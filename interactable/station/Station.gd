@@ -19,13 +19,13 @@ func _ready() -> void:
 	timer.connect("timeout", self, "_on_timer_timeout")
 	return
 
-func on_interact(playerEquippedItem) -> void:
+func on_interact() -> void:
 	if completedItem != null:
 		_spawn_item()
 		completedItem = null
 		sprite.modulate = Color(1, 1, 1)
 	else:
-		var index = _get_blueprint_index_for_item(playerEquippedItem)
+		var index = _get_blueprint_index_for_item(PlayerManager.equippedItem)
 		if index >= 0:
 			#consume item
 			_start_build(index)

@@ -11,7 +11,8 @@ export(int) var numberItemsProduced = 0
 func _can_interact(itemInHand) -> bool:
 	return (itemInHand is Item) && (itemInHand.type == Constants.ItemType.TOOL) && (validToolNames.has(itemInHand.name))
 
-func on_interact(toolUsed: Item) -> void:
+func on_interact() -> void:
+	var toolUsed = PlayerManager.equippedItem
 	if !_can_interact(toolUsed):
 		return
 		
