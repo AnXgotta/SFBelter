@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends Interactable
 
 onready var sprite: Sprite = $Sprite
 onready var timer: Timer = $Timer
@@ -19,7 +19,10 @@ func _ready() -> void:
 	timer.connect("timeout", self, "_on_timer_timeout")
 	return
 
-func on_interact() -> void:
+func on_interact_left_click() -> void:
+	return
+
+func on_interact_right_click() -> void:
 	if completedItem != null:
 		_spawn_item()
 		completedItem = null
@@ -27,12 +30,12 @@ func on_interact() -> void:
 	else:
 		var index = _get_blueprint_index_for_item(PlayerManager.equippedItem)
 		if index >= 0:
-			#consume item
 			_start_build(index)
 	return
 
 
 func _start_build(blueprintIndex: int) -> void:
+	EventManager.emit_signal("player_equipped_item_consumed", 1)
 	sprite.modulate = Color(1, 0.5, 0)
 	currentBlueprint = blueprints[blueprintIndex]
 	buildTimeRemaining = currentBlueprint.productionTimeSeconds

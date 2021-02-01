@@ -23,24 +23,7 @@ func _update_inventory_locked_display() -> void:
 	for i in range(inventory.slots.size()):
 		_update_slot_locked(i)
 	return
-	
-func _on_slot_left_clicked(slotIndex) -> void:
-	var mouseItem: Item = inventory.get_mouse_item()
-	var selectedSlot: InventorySlot = inventory.slots[slotIndex]
-	
-	# if the slot is locked, we do nothing
-	if selectedSlot.locked:
-		return
-	
-	# else, we defer to the inventory to do logic
-	inventory.on_slot_left_clicked(slotIndex)
-	
-	return
 
-func _on_slot_right_clicked(slotIndex) -> void:
-	inventory.SETTESTITEM()
-	return
-	
 func _on_slots_changed(slotIndexes) -> void:
 	for i in slotIndexes:
 		_update_slot_display(i)

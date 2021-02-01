@@ -37,8 +37,10 @@ func _ready() -> void:
 	EventManager.connect("hotbar_item_equipped", self, "_on_hotbar_item_equipped")
 	
 	## Interaction
+	EventManager.connect("player_left_clicked_object", self, "_on_player_left_clicked_object")
+	EventManager.connect("player_right_clicked_object", self, "_on_player_right_clicked_object")
 	EventManager.connect("player_picked_up_item", self, "_on_player_picked_up_item")
-	EventManager.connect("player_consumed_item", self, "_on_player_consumed_item")
+	EventManager.connect("player_equipped_item_consumed", self, "_on_player_equipped_item_consumed")
 	EventManager.connect("player_opened_container", self, "_on_player_opened_container")
 	
 	return
@@ -131,6 +133,25 @@ func _on_hotbar_slot_right_clicked(slotIndex: int) -> void:
 	UIManager.hotbar_slot_right_clicked(slotIndex)
 	return
 
+
+# Interaction
+
+func _on_player_left_clicked_object(otherObject) -> void:
+	if PlayerManager._is_in_range(otherObject.get_global_position()):
+		print("LC In range: ", otherObject.name)
+		otherObject.on_interact_left_click()
+	else:
+		print("LC Not in range: ", otherObject.name)
+	return
+
+func _on_player_right_clicked_object(otherObject) -> void:
+	if PlayerManager._is_in_range(otherObject.get_global_position()):
+		print("RC In range: ", otherObject.name)
+		otherObject.on_interact_right_click()
+	else:
+		print("RC Not in range: ", otherObject.name)
+	return
+
 func _on_player_opened_container(containerInventory) -> void:
 	currentContainerInventory = containerInventory
 	inventoryOpen = true
@@ -143,12 +164,13 @@ func _on_player_picked_up_item(itemObject) -> void:
 	itemObject.was_picked_up(remainder)
 	return
 
-func _on_player_consumed_item(item, slotIndex) -> void:
-	print("Player Consumed Item: ", item.name, " at slot ", slotIndex)
+func _on_player_equipped_item_consumed(amount) -> void:
+	playerInventory.consume_item_at_slot(equippedItemIndex, amount)
 	return
 
-func _on_hotbar_item_equipped(item) -> void:
+func _on_hotbar_item_equipped(item, index) -> void:
 	equippedItem = item
+	equippedItemIndex = index
 	return
 
 func get_mouse_item() -> Item:
@@ -157,6 +179,7 @@ func get_mouse_item() -> Item:
 func set_mouse_item(newItem: Item) -> Item:
 	var previousMouseItem = mouseSlotItem
 	mouseSlotItem = newItem
+	EventManager.emit_signal("mouse_slot_updated", mouseSlotItem)
 	return previousMouseItem
 
 func should_block_movement() -> bool:

@@ -12,7 +12,7 @@ func _ready() -> void:
 	
 func _on_slot_left_clicked(slotIndex: int) -> void:
 	var slotItem = _set_slot_selected(true, slotIndex)
-	EventManager.emit_signal("hotbar_item_equipped", slotItem)
+	EventManager.emit_signal("hotbar_item_equipped", slotItem, slotIndex)
 	return
 	
 func _on_slot_right_clicked(slotIndex: int) -> void:
@@ -54,7 +54,7 @@ func _update_slot_display(slotIndex: int) -> void:
 	var inventoryItem = inventory.slots[slotIndex].item
 	slotUi.update_display(inventoryItem)
 	if slotIndex == selectedSlotIndex:
-		EventManager.emit_signal("hotbar_item_equipped", inventoryItem)
+		EventManager.emit_signal("hotbar_item_equipped", inventoryItem, slotIndex)
 	return
 
 func _set_slot_selected(selected: bool, slotIndex: int) -> Item:
@@ -67,5 +67,5 @@ func _set_slot_selected(selected: bool, slotIndex: int) -> Item:
 	var slotUi = get_child(slotIndex)
 	var inventoryItem = inventory.slots[slotIndex].item
 	slotUi.set_selected(selected)
-	EventManager.emit_signal("hotbar_item_equipped", inventoryItem)
+	EventManager.emit_signal("hotbar_item_equipped", inventoryItem, slotIndex)
 	return inventoryItem

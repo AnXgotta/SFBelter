@@ -64,7 +64,7 @@ func inventory_toggled(inventoryOpened: bool, containerOpen: bool) -> void:
 		_fade_in([playerInfoRoot, hotbarRoot])
 		_fade_out([inventoryRoot])
 		if containerOpen:
-			_fade_out([container])
+			_fade_out([containerRoot])
 	return
 
 func player_opened_container(containerInventory) -> void:

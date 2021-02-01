@@ -2,6 +2,7 @@ extends Node
 
 # UI
 signal on_change_mouse_cursor(cursorEnum)
+signal mouse_slot_updated(item)
 signal inventory_toggled()
 
 # Player
@@ -10,7 +11,9 @@ signal player_health_changed(newHealthPercentage)
 signal player_shield_changed(newShieldPercentage)
 signal player_picked_up_item(itemObject)
 signal player_opened_container(container)
-signal player_consumed_item(item, slotIndex)
+signal player_left_clicked_object(object)
+signal player_right_clicked_object(object)
+signal player_equipped_item_consumed(amount)
 
 # Hotbar
 signal hotbar_slot_left_clicked(slotIndex)

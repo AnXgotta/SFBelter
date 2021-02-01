@@ -106,24 +106,10 @@ func _on_ItemCollision_body_entered(body) -> void:
 	pickup_item(body)
 	return
 
-func left_clicked_object(otherObject) -> void:
-	if _is_in_range(otherObject.get_global_position()):
-		print("LC In range: ", otherObject.name)
-		otherObject.on_interact()
-	else:
-		print("LC Not in range: ", otherObject.name)
-		modify_health(-5)
-		modify_shield(-10)
+func on_interact_left_click() -> void:
 	return
 
-func right_clicked_object(otherObject) -> void:
-	if _is_in_range(otherObject.get_global_position()):
-		otherObject.on_interact()
-	else:
-		print("RC Not in range: ", otherObject.name)
-	return
-
-func on_interact(itemInHand) -> void:
-	if itemInHand is Item && itemInHand.type == Constants.ItemType.CONSUMABLE:
-		itemInHand.on_consume_item()
+func on_interact_right_click() -> void:
+	if PlayerManager.equippedItem is Item && PlayerManager.equippedItem.type == Constants.ItemType.CONSUMABLE:
+		PlayerManager.equippedItem.on_consume_item()
 	return

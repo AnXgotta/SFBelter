@@ -11,7 +11,7 @@ export(int) var numberItemsProduced = 0
 func _can_interact(itemInHand) -> bool:
 	return (itemInHand is Item) && (itemInHand.type == Constants.ItemType.TOOL) && (validToolNames.has(itemInHand.name))
 
-func on_interact() -> void:
+func on_interact_left_click() -> void:
 	var toolUsed = PlayerManager.equippedItem
 	if !_can_interact(toolUsed):
 		return
@@ -20,6 +20,9 @@ func on_interact() -> void:
 	if(healthPoints <= 0):
 		_spawn_items()
 		_destroy_self()
+	return
+
+func on_interact_right_click() -> void:
 	return
 
 func _destroy_self() -> void:

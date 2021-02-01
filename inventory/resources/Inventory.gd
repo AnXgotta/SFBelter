@@ -32,6 +32,9 @@ func initialize_empty() -> void:
 		slots.push_back(newSlot)
 	return
 
+func consume_item_at_slot(slotIndex: int, amount: int) -> void:
+	decrement_slot_item_amount(slotIndex)
+	return
 
 func add_item(item: Item, slotIndex: int = -1) -> int:
 	if !(item is Item):
@@ -95,6 +98,16 @@ func set_slot_item(slotIndex, item) -> Item:
 	slots[slotIndex].item = item
 	_emit_slots_changed([slotIndex])
 	return previousItem
+
+func decrement_slot_item_amount(slotIndex) -> Item:
+	var item = slots[slotIndex].item
+	item.amount -= 1
+	if item.amount <= 0:
+		slots[slotIndex].item = null
+	else:
+		slots[slotIndex].item = item
+	_emit_slots_changed([slotIndex])
+	return item
 
 func remove_slot_item(slotIndex) -> Item:
 	var previousItem = slots[slotIndex].item
